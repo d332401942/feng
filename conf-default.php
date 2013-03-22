@@ -101,7 +101,14 @@ class Conf extends Feng
 	 * redis 密码
 	 */
 	const REDIS_PASSWORD = '';
-    
+
+	/**
+	 * mongodb 连接字符串
+	 */
+	const MONGO_STRING = 'mongodb://root:123456@127.0.0.1:27017';
+
+    const MONGO_DBNAME = 'File';
+
     /**
      * 是否开启运行日志记录
      */
