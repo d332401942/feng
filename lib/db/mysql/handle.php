@@ -62,7 +62,6 @@ class HandleMysqlDbLib extends Feng
         $this->dataModel = $model;
         $this->modelName = $modelName;
         $this->tableName = $model->getTableName();
-        $this->getDb();
         LogVendorLib::end(__CLASS__, __FUNCTION__);
     }
 
@@ -126,6 +125,7 @@ class HandleMysqlDbLib extends Feng
     public function add($model)
     {
         LogVendorLib::start(__CLASS__, __FUNCTION__);
+        $this->getDb();
         if (! is_array($model))
         {
             $models = array(
@@ -162,6 +162,7 @@ class HandleMysqlDbLib extends Feng
     public function prepare($sql)
     {
         LogVendorLib::dbStart(__CLASS__, __FUNCTION__, $sql);
+        $this->getDb();
         try
         {
             $this->sth = $this->pdo->prepare($sql);
@@ -196,6 +197,7 @@ class HandleMysqlDbLib extends Feng
     public function exec($sql)
     {
     	LogVendorLib::dbStart(__CLASS__, __FUNCTION__, $sql);
+        $this->getDb();
     	try
     	{
     		$result = $this->pdo->exec($sql);
@@ -210,6 +212,7 @@ class HandleMysqlDbLib extends Feng
     public function query($sql,$modelName = null)
     {
         LogVendorLib::dbStart(__CLASS__, __FUNCTION__, $sql);
+        $this->getDb();
         try
         {
         	if ($modelName)
@@ -232,6 +235,7 @@ class HandleMysqlDbLib extends Feng
     public function queryOne($sql)
     {
         LogVendorLib::dbStart(__CLASS__, __FUNCTION__, $sql);
+        $this->getDb();
         try
         {
             $result = $this->pdo->query($sql,PDO::FETCH_ASSOC)->fetch();
