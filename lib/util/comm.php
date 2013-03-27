@@ -48,4 +48,29 @@ class CommUtilLib extends Feng
     
         return self::getDirTree($path, $dirArr);
     }
+
+	public static function diffNow($time)
+	{
+		$now = time();
+		$diff = $now - $time;
+		if ($diff < 60)
+		{
+			return $diff . '秒';
+		}
+		else if ($diff < 3600)
+		{
+			$m = (int)($diff / 60);
+			return $m . '分钟';
+		}
+		else if ($diff < 24 * 3600)
+		{
+			$h = (int)($diff / 3600);
+			return $h . '小时';
+		}
+		else 
+		{
+			$d = (int)($diff / 24 / 3600);
+			return $d . '天';
+		}
+	}
 }

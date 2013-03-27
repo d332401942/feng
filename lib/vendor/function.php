@@ -29,10 +29,17 @@ class FunctionVendorLib extends Feng
             $pa = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/";
             $t_string = array();
             preg_match_all($pa, $string, $t_string);
-
+			
+			$str = join('', array_slice($t_string[0], $start, $sublen));
+			$str = rtrim($str, '.');
             if (count($t_string[0]) - $start > $sublen)
-                return join('', array_slice($t_string[0], $start, $sublen)) . "...";
-            return join('', array_slice($t_string[0], $start, $sublen));
+			{
+                return $str . $etc;
+			}
+			else
+			{
+				return $str;
+			}
         } 
         else
         {
@@ -61,7 +68,7 @@ class FunctionVendorLib extends Feng
             }
             if (strlen($tmpstr) < $strlen)
             {
-                $tmpstr.= "...";
+                $tmpstr.= $etc;
             }
             return $tmpstr;
         }
@@ -103,6 +110,11 @@ class FunctionVendorLib extends Feng
     	
     	return $url;
     }
+
+	public function diffNow($time)
+	{
+		return CommUtilLib::diffNow($time);
+	}
     
     private function cncount($str)
     {
