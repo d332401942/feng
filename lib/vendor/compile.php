@@ -95,7 +95,6 @@ class CompileVendorLib extends Feng
             if (!file_exists($path))
             {
                 mkdir($path);
-                @chmod($path, 0777);
             }
         }
     }

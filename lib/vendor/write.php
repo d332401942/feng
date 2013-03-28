@@ -24,7 +24,7 @@ class WriteVendorLib extends Feng
     {
         if (!file_exists(dirname($file)))
         {
-            mkdir(dirname($file), 0777);
+            mkdir(dirname($file));
         }
         if (empty($this->handles[$file]))
         {

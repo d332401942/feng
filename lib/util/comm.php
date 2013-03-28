@@ -32,7 +32,7 @@ class CommUtilLib extends Feng
             if (!file_exists($dir))
             {
                 mkdir($dir);
-                //chmod($dir, 0777);
+                //chmod($dir, 077);
             }
         }
     }
