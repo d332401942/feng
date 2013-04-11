@@ -164,7 +164,6 @@ class Main extends Feng
 function M($className)
 {
     static $fengMClassNameToModel = array();
-    
     if (isset($fengMClassNameToModel[$className]))
     {
         $model = $fengMClassNameToModel[$className];
@@ -172,6 +171,7 @@ function M($className)
     else
     {
         $model = new $className();
+        $fengMClassNameToModel[$className] = $model;
     }
     return $model;
 }

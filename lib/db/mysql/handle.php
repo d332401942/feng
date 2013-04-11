@@ -79,14 +79,13 @@ class HandleMysqlDbLib extends Feng
      * @param array $options
      *            PDO连接选项
      */
-    public function selectDb($host, $userName, $passWord, $dbName, 
-            $options = null)
+    public function selectDb($host, $userName, $passWord, $dbName, $port = 3306, $options = null)
     {
         LogVendorLib::start(__CLASS__, __FUNCTION__);
         try
         {
             $this->pdo = ConnectMysqlDbLib::connectMysql($host, $userName, 
-                    $passWord, $dbName, $options);
+                    $passWord, $dbName, $port, $options);
         }
         catch (Exception $e)
         {
@@ -106,7 +105,7 @@ class HandleMysqlDbLib extends Feng
         if (! $this->pdo)
         {
             $this->selectDb(Config::DB_MYSQL_HOST, Config::DB_MYSQL_USERNAME, 
-                    Config::DB_MYSQL_PADDWORD, Config::DB_MYSQL_DBNAME);
+                    Config::DB_MYSQL_PADDWORD, Config::DB_MYSQL_DBNAME, Config::DB_MYSQL_PORT);
         }
         return $this->pdo;
         LogVendorLib::end(__CLASS__, __FUNCTION__);
@@ -208,6 +207,14 @@ class HandleMysqlDbLib extends Feng
     	}
     	LogVendorLib::dbEnd(__CLASS__, __FUNCTION__);
     }
+
+	public function run($sql)
+	{
+		LogVendorLib::dbStart(__CLASS__, __FUNCTION__, $sql);
+		$statement = $this->pdo->query($sql);
+		LogVendorLib::dbEnd(__CLASS__, __FUNCTION__);
+		return $statement;
+	}
 
     public function query($sql,$modelName = null)
     {
