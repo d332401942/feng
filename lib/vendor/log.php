@@ -45,7 +45,10 @@ class LogVendorLib extends Feng
         {
             FB::log(LogVendorLib::$fireDebugInfo);
         }
-        self::write();
+		if (Config::LOG_RUN_IS_OPEN)
+		{
+			self::write();
+		}
     }
 
     public static function setException($e)
