@@ -3,6 +3,10 @@
 class ModelCoreLib extends Feng
 {
 
+	const IS_YES = 1;
+
+	const IS_NO = 0;
+
     private $priMaryKey;
     private $tableName;
     private $workFields = array();
