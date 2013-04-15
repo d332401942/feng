@@ -17,7 +17,7 @@ class SphinxDbLib extends SphinxClient
 			$resultIds = array_keys($result['matches']);
 			if ($pageCore)
 			{
-				$pageCore->count = $result['total'];
+				$pageCore->count = $result['total_found'];
 				$pageCore->pageCount = ceil($pageCore->count / $pageCore->pageSize);
 			}
 		}
