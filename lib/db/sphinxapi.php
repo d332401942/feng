@@ -1,7 +1,7 @@
-﻿<?php
+<?php
 
 //
-// $Id$
+// $Id: sphinxapi.php 2970 2011-09-23 16:50:22Z klirichek $
 //
 
 //
@@ -30,7 +30,7 @@ define ( "SEARCHD_COMMAND_FLUSHATTRS",	7 );
 
 /// current client-side command implementation versions
 define ( "VER_COMMAND_SEARCH",		0x119 );
-define ( "VER_COMMAND_EXCERPT",		0x103 );
+define ( "VER_COMMAND_EXCERPT",		0x104 );
 define ( "VER_COMMAND_UPDATE",		0x102 );
 define ( "VER_COMMAND_KEYWORDS",	0x100 );
 define ( "VER_COMMAND_STATUS",		0x100 );
@@ -1119,6 +1119,7 @@ class SphinxClient
 		$req = join ( "", $this->_reqs );
 		$len = 8+strlen($req);
 		$req = pack ( "nnNNN", SEARCHD_COMMAND_SEARCH, VER_COMMAND_SEARCH, $len, 0, $nreqs ) . $req; // add header
+
 		if ( !( $this->_Send ( $fp, $req, $len+8 ) ) ||
 			 !( $response = $this->_GetResponse ( $fp, VER_COMMAND_SEARCH ) ) )
 		{
@@ -1257,8 +1258,7 @@ class SphinxClient
 						$nvalues = $val;
 						while ( $nvalues>0 && $p<$max )
 						{
-							$val = sphUnpackU64 ( substr ( $response, $p, 8 ) ); $p += 8;
-							$attrvals[$attr][] = strval( $val ); // FIXME!!! sphFixUint returns MVA values as string so It to
+							$attrvals[$attr][] = sphUnpackU64 ( substr ( $response, $p, 8 ) ); $p += 8;
 							$nvalues -= 2;
 						}
 					} else if ( $type==SPH_ATTR_STRING )
@@ -1344,6 +1344,8 @@ class SphinxClient
 		if ( !isset($opts["allow_empty"]) )			$opts["allow_empty"] = false;
 		if ( !isset($opts["passage_boundary"]) )	$opts["passage_boundary"] = "none";
 		if ( !isset($opts["emit_zones"]) )			$opts["emit_zones"] = false;
+		if ( !isset($opts["load_files_scattered"]) )		$opts["load_files_scattered"] = false;
+		
 
 		/////////////////
 		// build request
@@ -1360,6 +1362,7 @@ class SphinxClient
 		if ( $opts["load_files"] )		$flags |= 128;
 		if ( $opts["allow_empty"] )		$flags |= 256;
 		if ( $opts["emit_zones"] )		$flags |= 512;
+		if ( $opts["load_files_scattered"] )	$flags |= 1024;
 		$req = pack ( "NN", 0, $flags ); // mode=0, flags=$flags
 		$req .= pack ( "N", strlen($index) ) . $index; // req index
 		$req .= pack ( "N", strlen($words) ) . $words; // req words
@@ -1705,5 +1708,5 @@ class SphinxClient
 }
 
 //
-// $Id$
+// $Id: sphinxapi.php 2970 2011-09-23 16:50:22Z klirichek $
 //
