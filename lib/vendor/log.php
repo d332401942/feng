@@ -6,6 +6,8 @@ class LogVendorLib extends Feng
     const KEY_RUN_INFO = '运行信息';
 
     const KEY_DB_MYSQL = 'MySQL';
+	
+	const KEY_DB_SPHINX = 'Sphinx';
 
     const KEY_DB_TYPE_KEY = 'DBTYPE';
 
@@ -140,11 +142,11 @@ class LogVendorLib extends Feng
                         self::KEY_QUERY => $query
                 )
         );
-        if (! isset(self::$fireDebugInfo[self::KEY_DB_MYSQL]))
+        if (! isset(self::$fireDebugInfo[$dbType]))
         {
-            self::$fireDebugInfo[self::KEY_DB_MYSQL] = array();
+            self::$fireDebugInfo[$dbType] = array();
         }
-        array_push(self::$fireDebugInfo[self::KEY_DB_MYSQL], $info);
+        array_push(self::$fireDebugInfo[$dbType], $info);
     }
 
     public static function write()
@@ -253,7 +255,8 @@ class LogVendorLib extends Feng
     {
         $runfile = $path . '/run.log';
         $runHandle = fopen($runfile, 'a');
-        $runContent = self::getRunContent();
+        //$runContent = self::getRunContent();
+        $runContent = json_encode(self::$fireDebugInfo) . "\r\n";
         fwrite($runHandle, $runContent);
         fclose($runHandle);
     }
