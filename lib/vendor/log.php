@@ -5,6 +5,8 @@ class LogVendorLib extends Feng
 
     const KEY_RUN_INFO = '运行信息';
 
+	const KEY_DB = 'Db';
+
     const KEY_DB_MYSQL = 'MySQL';
 	
 	const KEY_DB_SPHINX = 'Sphinx';
@@ -142,11 +144,11 @@ class LogVendorLib extends Feng
                         self::KEY_QUERY => $query
                 )
         );
-        if (! isset(self::$fireDebugInfo[$dbType]))
+        if (! isset(self::$fireDebugInfo[self::KEY_DB]))
         {
-            self::$fireDebugInfo[$dbType] = array();
+            self::$fireDebugInfo[self::KEY_DB] = array();
         }
-        array_push(self::$fireDebugInfo[$dbType], $info);
+        array_push(self::$fireDebugInfo[self::KEY_DB], $info);
     }
 
     public static function write()
@@ -164,29 +166,30 @@ class LogVendorLib extends Feng
         self::writeSysError($path);
         self::writeWarning($path);
         self::writeException($path);
-        self::writeDbMysql($path);
+        self::writeDb($path);
     }
 
-    private static function writeDbMysql($path)
+    private static function writeDb($path)
     {
-        $file = $path . '/mysql.log';
-        if (! empty(self::$fireDebugInfo[self::KEY_DB_MYSQL]))
+        $file = $path . '/db.log';
+        if (! empty(self::$fireDebugInfo[self::KEY_DB]))
         {
             $handle = fopen($file, 'a');
-            foreach (self::$fireDebugInfo[self::KEY_DB_MYSQL] as $array)
+            foreach (self::$fireDebugInfo[self::KEY_DB] as $array)
             {
                 $str = '';
                 foreach ($array as $key => $arr)
                 {
-                    $str .= '【'.$key . '】';
-                    $str .= '【query::'. (is_array($arr[self::KEY_QUERY]) ? implode(',', $arr[self::KEY_QUERY]) : $arr[self::KEY_QUERY]).'】';
-                    $str .= '【StartTime::' .
+                    $str .= '['.$key . ']';
+                    //$str .= '[query::'. (is_array($arr[self::KEY_QUERY]) ? implode(',', $arr[self::KEY_QUERY]) : $arr[self::KEY_QUERY]).']';
+					$str .= '[query::' .json_encode($arr[self::KEY_QUERY]). ']';
+                    $str .= '[StartTime::' .
                             date('H:m:s', $arr[self::KEY_START_TIME]) .
-                            strstr($arr[self::KEY_START_TIME], '.').'】';
-                    $str .= '【EndTime::' .
+                            strstr($arr[self::KEY_START_TIME], '.').']';
+                    $str .= '[EndTime::' .
                             date('H:m:s', $arr[self::KEY_END_TIME]) .
-                            strstr($arr[self::KEY_END_TIME], '.').'】';
-                    $str .= '【UseTime::' . $arr[self::KEY_USED_TIME].'】';
+                            strstr($arr[self::KEY_END_TIME], '.').']';
+                    $str .= '[UseTime::' . $arr[self::KEY_USED_TIME].']';
                 }
                 $str .= "\r\n";
                 fwrite($handle, $str);
@@ -255,8 +258,8 @@ class LogVendorLib extends Feng
     {
         $runfile = $path . '/run.log';
         $runHandle = fopen($runfile, 'a');
-        //$runContent = self::getRunContent();
-        $runContent = json_encode(self::$fireDebugInfo) . "\r\n";
+        $runContent = self::getRunContent();
+        //$runContent = json_encode(self::$fireDebugInfo) . "\r\n";
         fwrite($runHandle, $runContent);
         fclose($runHandle);
     }
