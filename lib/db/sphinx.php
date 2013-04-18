@@ -24,6 +24,17 @@ class SphinxDbLib extends SphinxClient
 		return $resultIds;
 	}
 	
+	public function getLightWords($result)
+	{
+		$lightWords = array();
+		if (!empty($result['words']))
+		{
+			$lightWords = array_keys($result['words']);
+			usort($lightWords, array(__CLASS__, 'sortByLength'));
+		}
+		return $lightWords;
+	}
+	
 	public function buildExcerpts($docs, $index, $words, $opts = array())
 	{
 		$array = array(
@@ -130,6 +141,14 @@ class SphinxDbLib extends SphinxClient
 		$this->resetFilters();
 		$this->resetGroupBy();
 	}
+	
+	private static function sortByLength($a, $b)
+	{
+		$al = mb_strlen($a, 'utf-8');
+		$bl = mb_strlen($b, 'utf-8');
+		return ($a < $b) ? -1 : 1;
+	}
+
 
 	private function connect()
 	{
