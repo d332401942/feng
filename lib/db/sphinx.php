@@ -35,6 +35,7 @@ class SphinxDbLib extends SphinxClient
 		return $lightWords;
 	}
 	
+	
 	public function buildExcerpts($docs, $index, $words, $opts = array())
 	{
 		$array = array(
