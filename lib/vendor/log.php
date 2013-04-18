@@ -47,7 +47,11 @@ class LogVendorLib extends Feng
     {
         if (Config::FIRE_DEBUG)
         {
-            FB::log(LogVendorLib::$fireDebugInfo);
+			$str = json_encode(LogVendorLib::$fireDebugInfo);
+			echo '<script>';
+			echo 'console.log('.$str.');';
+			echo '</script>';
+            //FB::log(LogVendorLib::$fireDebugInfo);
         }
 		if (Config::LOG_RUN_IS_OPEN)
 		{
