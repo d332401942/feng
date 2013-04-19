@@ -92,6 +92,19 @@ class ModelCoreLib extends Feng
         return $array;
     }
     
+    public function loadArray($arr)
+    {
+        $igoneFields = $this->getIgoneFields();
+        foreach ($arr as $key => $val)
+        {
+            if (in_array($key, $igoneFields))
+            {
+                continue;
+            }
+            $this->$key = $val;
+        }
+    }
+    
     public function setIgoneFields($varNames)
     {
         if (!is_array($varNames))

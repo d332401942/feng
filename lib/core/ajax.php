@@ -12,7 +12,7 @@ class AjaxCoreLib extends ViewCoreLib
                 )
         );
         echo json_encode($array);
-        exit();
+        $this->ajaxExit();
     }
 
     public function response($data)
@@ -21,6 +21,11 @@ class AjaxCoreLib extends ViewCoreLib
                 'result' => $data
         );
         echo json_encode($array);
-        exit();
+        $this->ajaxExit();
     }
+	
+	private function ajaxExit()
+	{
+		throw new AjaxExceptionLib();
+	}
 }

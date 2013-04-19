@@ -1,3 +1,6 @@
 conf.php
+.buildpath
+.project
+.settings
 *.swp
 /nbproject/private/

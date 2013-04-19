@@ -4,6 +4,8 @@ class VerifyUtilLib extends Feng
 {
 
     const SESSION_KEY = 'verify';
+
+	const EXPIRATION_TIME = 60;
     
     private $width; // 验证码图片的宽度
     private $height; // 验证码图片的高度
@@ -34,7 +36,9 @@ class VerifyUtilLib extends Feng
     
     public static function getVerifyCode()
     {
-        return $_SESSION[self::SESSION_KEY];
+		$key = self::getKey();
+		$mem = M('MemcacheDbLib');
+		return $mem->get($key);
     }
 
     /**
@@ -43,9 +47,12 @@ class VerifyUtilLib extends Feng
      *
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
-        $_SESSION[self::SESSION_KEY] = strtoupper($this->checkCode); // 加到session中
+		$key = self::getKey();
+		$mem = M('MemcacheDbLib');
+        $value = strtoupper($this->checkCode); // 加到session中
+		$mem->set($key, $value, 0, self::EXPIRATION_TIME);
         $this->outImg(); // 输出验证码
         return '';
     }
@@ -150,8 +157,14 @@ class VerifyUtilLib extends Feng
             die("PHP不支持图像创建！"); // 不输出图像，输出一错误消息，并退出程序
         }
     }
+	
+	private static function getKey()
+	{
+		$sessId = $_COOKIE['PHPSESSID'];
+		return $sessId . self::SESSION_KEY;
+	}
 
-    function __destruct()
+    public function __destruct()
     { // 当对象结束之前销毁图像资源释放内存
           // imagedestroy($this->image); //调用GD库中的方法销毁图像资源
     }

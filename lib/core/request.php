@@ -31,7 +31,12 @@ class RequestCoreLib extends Feng
 		$params = $this->getParams($paramStr);
 		UrlCoreLib::$viewClass = $this->getViewClass($viewStr, $className);
 		LogVendorLib::start($className, $defFunc);
-		UrlCoreLib::$viewClass->$defFunc($params);
+		try
+		{
+			UrlCoreLib::$viewClass->$defFunc($params);
+		}
+		catch(AjaxExceptionLib $e)
+		{}
 		LogVendorLib::end($className, $defFunc);
 	}
     
