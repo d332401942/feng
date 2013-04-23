@@ -116,6 +116,10 @@ class RequestCoreLib extends Feng
     
     private function responseError($msg, $code = 0)
     {
+    	if (!$msg && !$code)
+    	{
+    		return;
+    	}
     	$array = array(
     					'error' => array(
     									'message' => $msg,
