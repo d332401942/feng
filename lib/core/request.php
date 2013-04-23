@@ -44,7 +44,11 @@ class RequestCoreLib extends Feng
 			$this->responseError($message, $code);
 		}
 		catch(AjaxExceptionLib $e)
-		{}
+		{
+			$message = $e->getMessage();
+			$code = $e->getCode();
+			$this->responseError($message, $code);
+		}
 		LogVendorLib::end($className, $defFunc);
 	}
 	
