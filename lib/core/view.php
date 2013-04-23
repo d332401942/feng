@@ -52,12 +52,21 @@ class ViewCoreLib extends Feng
 
     public function responseError($msg = '', $code = 0)
     {
+    	if (is_array($msg) || is_object($msg))
+    	{
+    		$msg = json_encode($msg);
+    	}
         throw new ViewExceptionLib($msg, $code);
     }
 
     public function redirect($url)
     {
-        header('Location: ' . $url);
+        header('Location: ' . $url);exit;
+    }
+    
+    public function closeWindow()
+    {
+    	throw new OtherExceptionLib(OtherExceptionLib::CLOSE_WINDOW);
     }
 
     private function compile()

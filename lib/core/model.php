@@ -94,6 +94,10 @@ class ModelCoreLib extends Feng
     
     public function loadArray($arr)
     {
+    	if (empty($arr) || !is_array($arr))
+    	{
+    		return;
+    	}
         $igoneFields = $this->getIgoneFields();
         foreach ($arr as $key => $val)
         {

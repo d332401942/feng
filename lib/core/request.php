@@ -9,6 +9,7 @@ class RequestCoreLib extends Feng
         $viewStr = empty($parameters[0]) ? strtolower(Config::VIEW_DOLDER) : strtolower($parameters[0]);
         $paramStr = empty($parameters[1]) ? '' : $parameters[1];
         $params = $this->getParams($paramStr);
+        $className = null;
         UrlCoreLib::$viewClass = $this->getViewClass($viewStr, $className);
         $templateFile = self::getTempateFile($className);
         UrlCoreLib::$viewClass->render($templateFile);
@@ -29,17 +30,24 @@ class RequestCoreLib extends Feng
 		$viewStr = 'ajax/' . implode('/', $arr);
 		$paramStr = empty($parameters[1]) ? '' : $parameters[1];
 		$params = $this->getParams($paramStr);
+		$className = null;
 		UrlCoreLib::$viewClass = $this->getViewClass($viewStr, $className);
 		LogVendorLib::start($className, $defFunc);
 		try
 		{
 			UrlCoreLib::$viewClass->$defFunc($params);
 		}
+		catch (BusinessExceptionLib $e)
+		{
+			$message = $e->getMessage();
+			$code = $e->getCode();
+			$this->responseError($message, $code);
+		}
 		catch(AjaxExceptionLib $e)
 		{}
 		LogVendorLib::end($className, $defFunc);
 	}
-    
+	
     protected static function getTempateFile($className)
     {
         return rtrim(APP_DIR, '/') . '/' . config::TEMPLATE_DOLDER . UrlCoreLib::getTplFileName($className);
@@ -100,5 +108,16 @@ class RequestCoreLib extends Feng
             $i += 2;
         }
         return $params;
+    }
+    
+    private function responseError($msg, $code = 0)
+    {
+    	$array = array(
+    					'error' => array(
+    									'message' => $msg,
+    									'code' => $code
+    					)
+    	);
+    	echo json_encode($array);
     }
 }
