@@ -21,7 +21,7 @@ class FunctionVendorLib extends Feng
     
     public function parsePicpath($path)
     {
-        if (!preg_match('/^http:\/\//',$path))
+        if (!preg_match('/^http:\/\//',$path) && !preg_match('/^\//',$path))
         {
             $path = '/'.$path;
         }
