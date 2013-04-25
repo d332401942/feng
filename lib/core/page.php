@@ -9,5 +9,5 @@ class PageCoreLib extends Feng
     
     public $pageCount;
     
-    public $count;
+    public $count = 0;
 }

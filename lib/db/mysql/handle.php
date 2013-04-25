@@ -211,6 +211,7 @@ class HandleMysqlDbLib extends Feng
 	public function run($sql)
 	{
 		LogVendorLib::dbStart(__CLASS__, __FUNCTION__, $sql);
+		$this->getDb();
 		$statement = $this->pdo->query($sql);
 		LogVendorLib::dbEnd(__CLASS__, __FUNCTION__);
 		return $statement;
