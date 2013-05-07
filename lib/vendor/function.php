@@ -27,6 +27,16 @@ class FunctionVendorLib extends Feng
         }
         return $path;
     }
+
+	public function searchPicpath($path)
+	{
+		$host = Config::STATIC_HOST;
+        if (!preg_match('/^http:\/\//',$path) && !preg_match('/^\//',$path))
+        {
+            $path = $host. '/'.$path;
+        }
+		return $path;
+	}
     
     public function numerRound($numer,$n)
     {
