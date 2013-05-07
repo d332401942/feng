@@ -179,11 +179,6 @@ class HandleMysqlDbLib extends Feng
         $this->clear();
         try
         {
-			//foreach ($array as $key => $val)
-			//{
-				//$array[$key] = preg_replace('/\<\?/', '&lt;?', $val);
-				//$array[$key] = preg_replace('/\?\>/', '?&gt', $val);
-			//}
             $this->sth->execute($array);
         }
         catch (Exception $e)
