@@ -153,6 +153,10 @@ class SphinxDbLib extends SphinxClient
 
 	private function connect()
 	{
-		$this->setServer(Config::SPHINX_SERVER, Config::SPHINX_PORT);
+		$port = Config::SPHINX_PORT;
+		$arr = explode(',',$port);
+		$rand = mt_rand(0, count($arr) - 1);
+		$port = (int) $arr[$rand];
+		$this->setServer(Config::SPHINX_SERVER, $port);
 	}
 }
