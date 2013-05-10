@@ -197,10 +197,15 @@ function P()
         {
             echo $arg . '<br>';
         }
-        else
+        else if (is_object($arg))
         {
-            var_dump($arg);
+            print_r($arg);
             echo '<br>';
+        }
+        else 
+        {
+        	var_dump($arg);
+        	echo '<br>';
         }
     }
     echo '</pre></div>';

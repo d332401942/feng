@@ -105,7 +105,7 @@ class HandleMysqlDbLib extends Feng
         if (! $this->pdo)
         {
             $this->selectDb(Config::DB_MYSQL_HOST, Config::DB_MYSQL_USERNAME, 
-                    Config::DB_MYSQL_PADDWORD, Config::DB_MYSQL_DBNAME, Config::DB_MYSQL_PORT);
+                    Config::DB_MYSQL_PASSWORD, Config::DB_MYSQL_DBNAME, Config::DB_MYSQL_PORT);
         }
         return $this->pdo;
         LogVendorLib::end(__CLASS__, __FUNCTION__);
@@ -145,9 +145,12 @@ class HandleMysqlDbLib extends Feng
                 foreach ($arrVal as $k => $arr)
                 {
                     $this->execute($arr);
-                    $id = $this->pdo->lastInsertId();
                     $primaryKey = $models[$k]->getPrimaryKey();
-                    $models[$k]->$primaryKey = $id;
+                    if ($primaryKey)
+                    {
+	                    $id = $this->pdo->lastInsertId();
+	                    $models[$k]->$primaryKey = $id;
+                    }
                 }
             }
             catch (Exception $e)
