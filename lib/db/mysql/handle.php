@@ -238,13 +238,20 @@ class HandleMysqlDbLib extends Feng
         return $result;
     }
     
-    public function queryOne($sql)
+    public function queryOne($sql,$modelName = null)
     {
         LogVendorLib::dbStart(__CLASS__, __FUNCTION__, $sql);
         $this->getDb();
         try
         {
-            $result = $this->pdo->query($sql,PDO::FETCH_ASSOC)->fetch();
+        	if ($modelName)
+        	{
+        		$result = $this->pdo->query($sql)->fetchObject($modelName);
+        	}
+        	else
+        	{
+        		$result = $this->pdo->query($sql,PDO::FETCH_ASSOC)->fetch();
+        	}
         }
         catch (Exception $e)
         {
