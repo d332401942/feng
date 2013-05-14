@@ -28,59 +28,41 @@ class XmlVendorLib extends Feng
 	 * @param $xslName XSL文件名(如:"http://www.xxx.com/templates/normal/xslname.xsl")        	
 	 * @return $XMLString 输出XML字符串
 	 */
-	public function getXML($array, $xslName = "")
+	public function getXML($array, $xslName = "", $isRn = false)
 	{
+		$lastStr = '';
+		if ($isRn)
+		{
+			$lastStr = "\r\n";
+		}
 		$array = CommUtilLib::Obj2Array($array);
-		$XMLString = '<?xml version="1.0" encoding="utf-8"?>';
+		$XMLString = '<?xml version="1.0" encoding="utf-8"?>'.$lastStr;
 		if ($xslName != "")
-			$XMLString .= '<?xml-stylesheet type="text/xsl" href="' . $xslName . '"?>';
-		$XMLString .= $this->make ( $array );
+			$XMLString .= '<?xml-stylesheet type="text/xsl" href="' . $xslName . '"?>'.$lastStr;
+		$XMLString .= '<xml>' . $lastStr;
+		$XMLString .= $this->make ( $array ,$lastStr);
+		$XMLString .= '</xml>';
 		return $XMLString;
 	}
 	
 	/*
 	 * 递归生成XML字串
 	 */
-	private function make($array)
+	private function make($array,$lastStr)
 	{
 		$XMLString = '';
-		$haveRightBracket = FALSE;
-		if (isset ( $array ['elementName'] ))
+		foreach ( $array as $paramKey => $nodeParam )
 		{
-			$elementName = array_shift ( $array ); // 数组的第一个元素为XML元素名
-		}
-		else
-		{
-			$elementName = 'item'; // 如果没有指定则元素名为item
-		}
-		$XMLString .= '<' . $elementName . ' ';
-		if (is_array ( $array ))
-		{
-			foreach ( $array as $paramKey => $nodeParam )
+			if (! is_array ( $nodeParam ))
 			{
-				if (! is_array ( $nodeParam ))
-				{
-					// 如果不是一个下级元素，那就是元素的参数
-					$XMLString .= $paramKey . '="' . $nodeParam . '" ';
-				}
-				else
-				{
-					if (! $haveRightBracket)
-					{
-						$XMLString .= '>';
-						$haveRightBracket = TRUE;
-					}
-					// 如果是下级元素，则追加元素
-					$XMLString .= $this->make ( $nodeParam );
-				}
+				$XMLString .= '<'.$paramKey.'>'.$nodeParam.'</'.$paramKey.'>' . $lastStr;
+			}
+			else
+			{
+				$XMLString .= '<'.$paramKey.'>'.$this->make($nodeParam, $lastStr).'</'.$paramKey.'>' . $lastStr;
 			}
 		}
-		if (! $haveRightBracket)
-		{
-			$XMLString .= '>';
-			$haveRightBracket = TRUE;
-		}
-		$XMLString .= '</' . $elementName . '>'; // 该元素处理结束
+		
 		return $XMLString;
 	}
 
