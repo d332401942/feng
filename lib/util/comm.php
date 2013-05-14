@@ -81,7 +81,7 @@ class CommUtilLib extends Feng
 		{
 			if (is_array($val) || is_object($val))
 			{
-				$array[$key] = self::Obj2Array($obj);
+				$array[$key] = self::Obj2Array($val);
 			}
 			else
 			{
