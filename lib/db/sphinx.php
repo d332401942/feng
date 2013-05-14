@@ -7,6 +7,7 @@ class SphinxDbLib extends SphinxClient
 	{
 		parent::__construct();
 		$this->connect();
+		$this->setMatchMode ( SPH_MATCH_EXTENDED2 );
 	}
 
 	public function getResultIds($result, $pageCore = null)
