@@ -44,7 +44,7 @@ class XmlVendorLib extends Feng
 	{
 		$XMLString = '';
 		$haveRightBracket = FALSE;
-		
+		$array = (array)$array;
 		if (isset ( $array ['elementName'] ) || isset($array->elementName))
 		{
 			$elementName = array_shift ( $array ); // 数组的第一个元素为XML元素名
@@ -58,7 +58,7 @@ class XmlVendorLib extends Feng
 		{
 			foreach ( $array as $paramKey => $nodeParam )
 			{
-				if (! is_array ( $nodeParam ))
+				if (! is_array ( $nodeParam ) && !is_object($nodeParam))
 				{
 					// 如果不是一个下级元素，那就是元素的参数
 					$XMLString .= $paramKey . '="' . $nodeParam . '" ';
