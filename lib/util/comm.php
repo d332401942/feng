@@ -74,6 +74,23 @@ class CommUtilLib extends Feng
 		}
 	}
 	
+	public static function Obj2Array($obj)
+	{
+		$array = array();
+		foreach ($obj as $key => $val)
+		{
+			if (is_array($val) || is_object($val))
+			{
+				$array[$key] = self::Obj2Array($obj);
+			}
+			else
+			{
+				$array[$key] = $val;
+			}
+		}
+		return $array;
+	}
+	
 	public static function truncate($string, $sublen = 80, $etc = '...', $break_words = false, $middle = false)
     {
         $start = 0;
