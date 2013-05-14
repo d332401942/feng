@@ -30,6 +30,7 @@ class XmlVendorLib extends Feng
 	 */
 	public function getXML($array, $xslName = "")
 	{
+		$array = CommUtilLib::Obj2Array($array);
 		$XMLString = '<?xml version="1.0" encoding="utf-8"?>';
 		if ($xslName != "")
 			$XMLString .= '<?xml-stylesheet type="text/xsl" href="' . $xslName . '"?>';
@@ -44,7 +45,6 @@ class XmlVendorLib extends Feng
 	{
 		$XMLString = '';
 		$haveRightBracket = FALSE;
-		$array = CommUtilLib::Obj2Array($array);
 		if (isset ( $array ['elementName'] ))
 		{
 			$elementName = array_shift ( $array ); // 数组的第一个元素为XML元素名
