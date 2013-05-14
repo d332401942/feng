@@ -45,7 +45,7 @@ class XmlVendorLib extends Feng
 		$XMLString = '';
 		$haveRightBracket = FALSE;
 		
-		if (isset ( $array ['elementName'] ))
+		if (isset ( $array ['elementName'] ) || isset($array->elementName))
 		{
 			$elementName = array_shift ( $array ); // 数组的第一个元素为XML元素名
 		}
@@ -54,7 +54,7 @@ class XmlVendorLib extends Feng
 			$elementName = 'item'; // 如果没有指定则元素名为item
 		}
 		$XMLString .= '<' . $elementName . ' ';
-		if (is_array ( $array ))
+		if (is_array ( $array ) || is_object($array))
 		{
 			foreach ( $array as $paramKey => $nodeParam )
 			{
