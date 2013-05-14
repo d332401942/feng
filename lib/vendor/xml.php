@@ -59,7 +59,7 @@ class XmlVendorLib extends Feng
 			}
 			if (! is_array ( $nodeParam ))
 			{
-				$XMLString .= '<'.$paramKey.'>'.$nodeParam.'</'.$paramKey.'>' . $lastStr;
+				$XMLString .= '<'.$paramKey.'>'.htmlspecialchars($nodeParam).'</'.$paramKey.'>' . $lastStr;
 			}
 			else
 			{
