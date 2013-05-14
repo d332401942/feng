@@ -53,6 +53,10 @@ class XmlVendorLib extends Feng
 		$XMLString = '';
 		foreach ( $array as $paramKey => $nodeParam )
 		{
+			if (is_numeric($paramKey))
+			{
+				$paramKey = 'item';
+			}
 			if (! is_array ( $nodeParam ))
 			{
 				$XMLString .= '<'.$paramKey.'>'.$nodeParam.'</'.$paramKey.'>' . $lastStr;
