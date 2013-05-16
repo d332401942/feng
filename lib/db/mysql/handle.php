@@ -3,6 +3,8 @@
 class HandleMysqlDbLib extends Feng
 {
 
+	private static $self;
+	
     /**
      * PDO对象
      *
@@ -63,6 +65,21 @@ class HandleMysqlDbLib extends Feng
         $this->modelName = $modelName;
         $this->tableName = $model->getTableName();
         LogVendorLib::end(__CLASS__, __FUNCTION__);
+    }
+    
+    /**
+     * 
+     * @param string $modelName
+     * @return $className
+     */
+    public static function getSelf($modelName = null)
+    {
+    	$className = get_called_class();
+    	if (!self::$self)
+    	{
+    		self::$self = new $className($className);
+    	}
+    	return self::$self;
     }
 
     /**

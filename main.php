@@ -161,6 +161,11 @@ class Main extends Feng
     }
 }
 
+/**
+ * 
+ * @param unknown $className
+ * @return $className
+ */
 function M($className)
 {
     static $fengMClassNameToModel = array();
