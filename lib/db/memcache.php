@@ -10,6 +10,7 @@ class MemcacheDbLib extends Memcache
 		{   
 			$arr = explode(':', $str);
 		    $this->addServer($arr[0], $arr[1]);
+		    //$this->setCompressThreshold(20000, 0.2);
 		} 
 	}
 }

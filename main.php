@@ -36,18 +36,18 @@ function customError($errno, $errstr, $errfile, $errline)
     switch ($errno)
     {
         case E_ERROR:
-            $errortype = '【MERROR:】';
+            $errortype = '[MERROR:]';
             break;
 
         case E_WARNING:
-            $errortype = '【WARNING:】';
+            $errortype = '[WARNING:]';
             break;
 
         case E_NOTICE:
-            $errortype = '【NOTICE:】';
+            $errortype = '[NOTICE:]';
             break;
         default:
-            $errortype = '【Unknown error type:】';
+            $errortype = '[Unknown error type:]';
             break;
     }
     $errorMsg = $errortype . $errstr . ' in ' . $errfile.' on line ' . $errline;
