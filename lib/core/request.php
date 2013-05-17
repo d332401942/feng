@@ -93,7 +93,6 @@ class RequestCoreLib extends Feng
 
     protected function getParams($str)
     {
-        $str = urldecode($str);
         $params = array();
         $str = trim($str, '/');
         if (!$str)
@@ -108,7 +107,7 @@ class RequestCoreLib extends Feng
         $i = 0;
         while ($i < count($arr))
         {
-            $params[$arr[$i]] = $arr[$i + 1];
+            $params[$arr[$i]] = urldecode($arr[$i + 1]);
             $i += 2;
         }
         return $params;
