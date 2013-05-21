@@ -4,3 +4,4 @@ conf.php
 .settings
 *.swp
 /nbproject/private/
+/nbproject
