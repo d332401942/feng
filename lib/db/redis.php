@@ -1,6 +1,11 @@
 <?php
 
-class RedisDbLib extends redis
+if (!class_exists('Redis'))
+{
+	include __DIR__ + '/redisapi.php';
+}
+
+class RedisDbLib extends Redis
 {
 	
 	public function __construct($host = null, $port = null)
