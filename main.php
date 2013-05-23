@@ -1,5 +1,6 @@
 <?php
 @umask(0002);
+ini_set('memory_limit','2048M');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 set_error_handler('customError');
