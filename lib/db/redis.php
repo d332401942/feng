@@ -2,19 +2,13 @@
 
 if (!class_exists('Redis'))
 {
-	include __DIR__ + '/redisapi.php';
+	include __DIR__ . '/redisapi.php';
 }
 
 class RedisDbLib extends Redis
 {
 	
 	public function __construct($host = null, $port = null)
-	{
-		parent::__construct();
-		$this->connect($host,$port);
-	}
-
-	public function connect($host = null, $port = null)
 	{
 		if (!$host)
 		{
@@ -24,10 +18,19 @@ class RedisDbLib extends Redis
 		{
 			$port = Config::REDIS_PORT;
 		}
-		parent::connect($host, $port);
+		if (method_exists($this, 'setHost'))
+		{
+			parent::__construct($host,$port);
+		}
+		else
+		{
+			parent::__construct();
+			parent::connect($host, $port);
+		}
 		if (Config::REDIS_PASSWORD)
 		{
 			$this->auth(Config::REDIS_PASSWORD);
 		}
 	}
+
 }

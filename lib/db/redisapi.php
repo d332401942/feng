@@ -13,6 +13,12 @@ class Redis {
 	private $_sock;
 	public $debug=false;
 	
+	public function setHost($host='localhost', $port = 6379) 
+	{
+		$this->host = $host;
+		$this->port = $port;
+	}
+	
 	function __construct($host='localhost', $port = 6379) {
 		$this->host = $host;
 		$this->port = $port;
