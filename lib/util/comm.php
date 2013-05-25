@@ -156,6 +156,25 @@ class CommUtilLib extends Feng
             return $tmpstr;
         }
     }
+    
+    public static function str2Arr($str, $code = 'utf-8')
+    {
+    	$count = mb_strlen($str, $code);
+    	$arr = array();
+    	for ($i = 0; $i < $count; $i++)
+    	{
+    		$arr[] = mb_substr($str, $i, 1, $code);
+    	}
+    	return $arr;
+    }
+    
+    public static function isChinese($str)
+    {
+    	$regex = '/[\x{4e00}-\x{9fa5}]{3}/u';
+    	$matches = array();
+    	$is = preg_match($regex, $str);
+    	return $is;
+    }
 	
 	private static function cncount($str)
     {
