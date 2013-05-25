@@ -3,10 +3,12 @@ include __DIR__ . '/sphinxapi.php';
 class SphinxDbLib extends SphinxClient
 {
 
-	public function __construct()
+	public function __construct($server = null, $port = null)
 	{
 		parent::__construct();
-		$this->connect();
+		$server = $server ? $server : Config::SPHINX_SERVER;
+		$port = $port ? $port : Config::SPHINX_PORT;
+		$this->connect($server,$port);
 		$this->setMatchMode ( SPH_MATCH_EXTENDED2 );
 	}
 
@@ -152,12 +154,11 @@ class SphinxDbLib extends SphinxClient
 	}
 
 
-	private function connect()
+	private function connect($server,$port)
 	{
-		$port = Config::SPHINX_PORT;
 		$arr = explode(',',$port);
 		$rand = mt_rand(0, count($arr) - 1);
 		$port = (int) $arr[$rand];
-		$this->setServer(Config::SPHINX_SERVER, $port);
+		$this->setServer($server, $port);
 	}
 }
