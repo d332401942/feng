@@ -47,7 +47,23 @@ class LogVendorLib extends Feng
     {
         if (Config::FIRE_DEBUG)
         {
-            FB::log(LogVendorLib::$fireDebugInfo);
+        	$logInfo = LogVendorLib::$fireDebugInfo;
+        	unset($logInfo[self::KEY_AUTO_LOAD_FILE]);
+        	if (isset($logInfo[self::KEY_EXCEPTION][0]))
+        	{
+        		$e = $logInfo[self::KEY_EXCEPTION][0];
+        		$className = get_class($e);
+        		$line = $e->getFile() .'---'. $e->getLine();
+        		$code = $e->getCode();
+        		$msg = $e->getMessage();
+        		$logInfo[self::KEY_EXCEPTION] = array(
+        						'ClassName' => $className,
+        						'Line' => $line,
+        						'Code' => $code,
+        						'Message' => $msg,
+        		);
+        	}
+            FB::log($logInfo);
         }
 		if (Config::LOG_RUN_IS_OPEN)
 		{
