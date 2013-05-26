@@ -330,7 +330,7 @@ class HandleMysqlDbLib extends Feng
             $preStr = trim($preStr, ',');
             
             $parameters[] = $model->$primaryKey;
-            $sql = 'update ' . $tableName . ' set ' . $preStr . ' where ' .
+            $sql = 'update `' . $tableName . '` set ' . $preStr . ' where ' .
                      $primaryKey . ' = ?';
             $this->prepare($sql);
             $this->execute($parameters);
