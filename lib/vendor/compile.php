@@ -318,7 +318,6 @@ class CompileVendorLib extends Feng
 				}
 			}
 			$arr = explode ( ':', $other );
-            P($arr,$tt,$array);
 			if ($tempArr)
 			{
 				foreach ( $arr as $k => $v )
