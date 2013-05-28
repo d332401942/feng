@@ -5,7 +5,7 @@ class ViewCoreLib extends Feng
 
     private $templateFile = null;
     private $compile = null;
-
+    
     public function __construct()
     {
         $this->compile = new CompileVendorLib();
