@@ -11,7 +11,8 @@ class UrlCoreLib
         $pathInfo = trim($_SERVER['REQUEST_URI'], '/');
         $pathInfo = preg_replace('/^(.*?)\.php/', '', $pathInfo);
         $pathInfo = trim($pathInfo, '/');
-        $pathInfo = array_shift(explode('?', $pathInfo));
+        $arr = explode('?', $pathInfo);
+        $pathInfo = array_shift($arr);
         $matches = array();
         foreach ($regulation as $pattern => $arr)
         {
