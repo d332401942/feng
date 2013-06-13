@@ -12,11 +12,14 @@ class RequestCoreLib extends Feng
         $className = null;
         UrlCoreLib::$viewClass = $this->getViewClass($viewStr, $className);
         $templateFile = self::getTempateFile($className);
-        UrlCoreLib::$viewClass->render($templateFile);
+        if (!UrlCoreLib::$viewClass->isRender())
+        {
+        	UrlCoreLib::$viewClass->render ( $templateFile );
+        }
         LogVendorLib::start($className, $defFunc);
         UrlCoreLib::$viewClass->$defFunc($params);
         LogVendorLib::end($className, $defFunc);
-        if (!UrlCoreLib::$displayEd)
+        if (!UrlCoreLib::$viewClass->isDisplay)
         {
             UrlCoreLib::$viewClass->display();
         }

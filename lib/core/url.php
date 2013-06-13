@@ -3,7 +3,6 @@
 class UrlCoreLib
 {
 
-    public static $displayEd = false;
     public static $viewClass;
     
     public function parseUrl($regulation)

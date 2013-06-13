@@ -386,6 +386,7 @@ class CompileVendorLib extends Feng
 	{
 		$className = $parameters ['class'];
 		unset ( $parameters ['class'] );
+		
 		$controlClass = new $className ();
 		foreach ( $parameters as $key => $val )
 		{
@@ -394,10 +395,17 @@ class CompileVendorLib extends Feng
 		$defFunc = config::VIEW_FUNC;
 		$controlClass->$defFunc ( $parameters );
 		$templateFile = rtrim ( APP_DIR, '/' ) . '/' . config::TEMPLATE_DOLDER . UrlCoreLib::getTplFileName ( $className );
+		
 		if (file_exists ( $templateFile ))
 		{
-			$controlClass->render ( $templateFile );
-			$controlClass->display ();
+			if (!$controlClass->isRender())
+			{
+				$controlClass->render ( $templateFile );
+			}
+			if (!$controlClass->isDisplay)
+			{
+				$controlClass->display ();
+			}
 		}
 		else if (Config::FIRE_DEBUG)
 		{

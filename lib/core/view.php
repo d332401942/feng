@@ -5,10 +5,20 @@ class ViewCoreLib extends Feng
 
     private $templateFile = null;
     private $compile = null;
+    public $isDisplay = false;
     
     public function __construct()
     {
         $this->compile = new CompileVendorLib();
+    }
+    
+    public function isRender()
+    {
+    	if ($this->templateFile)
+    	{
+    		return true;
+    	}
+    	return false;
     }
 
     public function render($templateFile)
@@ -31,7 +41,7 @@ class ViewCoreLib extends Feng
 
     public function display($templateFile = null)
     {
-        UrlCoreLib::$displayEd = true;
+        $this->isDisplay = true;
         if ($templateFile)
         {
             $this->templateFile = $templateFile;
