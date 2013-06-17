@@ -5,7 +5,7 @@ class UrlCoreLib
 
     public static $viewClass;
     
-    public function parseUrl($regulation)
+    public function parseUrl($regulation, $hostHeader = null)
     {
         $pathInfo = trim($_SERVER['REQUEST_URI'], '/');
         $pathInfo = preg_replace('/^(.*?)\.php/', '', $pathInfo);
@@ -27,7 +27,7 @@ class UrlCoreLib
                     }
                 }
                 $class = new Request();
-                $class->$funcName($needParameters);
+                $class->$funcName($needParameters, $hostHeader);
                 return;
             }
         }

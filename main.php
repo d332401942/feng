@@ -139,12 +139,12 @@ class AutoLoad extends Feng
 class Main extends Feng
 {
 
-    public function run($regulation)
+    public function run($regulation, $hostHeader = null)
     {
         $urlClass = new UrlCoreLib();
         try
         {
-            $urlClass->parseUrl($regulation);
+            $urlClass->parseUrl($regulation, $hostHeader);
             LogVendorLib::deBug();
         }
         catch (Exception $e)

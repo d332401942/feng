@@ -3,10 +3,15 @@
 class RequestCoreLib extends Feng
 {
     
-    public function httpRequest($parameters)
+    public function httpRequest($parameters,$hostHeader = null)
     {
         $defFunc = Config::VIEW_FUNC;
+        
         $viewStr = empty($parameters[0]) ? strtolower(Config::VIEW_DOLDER) : strtolower($parameters[0]);
+        if ($hostHeader && $hostHeader != 'www')
+        {
+        	$viewStr = $hostHeader . '/' . $viewStr;
+        }
         $paramStr = empty($parameters[1]) ? '' : $parameters[1];
         $params = $this->getParams($paramStr);
         $className = null;
