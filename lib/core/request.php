@@ -40,6 +40,11 @@ class RequestCoreLib extends Feng
     	{
     		$viewStr = $hostHeader . '/' . $viewStr;
     	}
+    	else if (empty($viewStr))
+    	{
+    		$viewStr = Config::VIEW_DOLDER;
+    	}
+    	
     	$arr = pathinfo($viewStr);
     	if (!empty($arr['extension']))
     	{
